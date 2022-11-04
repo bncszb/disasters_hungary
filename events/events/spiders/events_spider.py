@@ -10,7 +10,7 @@ class EventSpider(scrapy.Spider):
     start_urls=[rf"https://www.katasztrofavedelem.hu/modules/vesz/archivum/?yearMonth={year}-{month:02}&type=yearMonth&back=https%3A%2F%2Fwww.katasztrofavedelem.hu%2Fmodules%2Fvesz%2Fesemenyterkep%2F%3Fback%3D" 
     for year in range(2017,2023) for month in range(1,13)]
 
-    def parse(self, event, **kwargs):
+    def parse(self, response, **kwargs):
 
         items=EventsItem()
 
@@ -19,7 +19,7 @@ class EventSpider(scrapy.Spider):
         # event_info["title"]=response.css(".alert-info").css(".title::text").extract()
         # event_info["date"]=response.css(".alert-info").css(".date::text").extract()
         # event_info["category"]=response.css(".alert-info").css(".category::text").extract()
-        all_events=event.css(".VESZEventArchive").css("a")
+        all_events=response.css(".VESZEventArchive").css("a")
 
         for event in all_events:
             items["url"]=event.xpath("@href").extract_first()
