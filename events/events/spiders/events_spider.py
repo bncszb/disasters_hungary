@@ -1,4 +1,5 @@
 import scrapy
+from ..items import EventsItem
 
 class EventSpider(scrapy.Spider):
     name="events"
@@ -8,6 +9,7 @@ class EventSpider(scrapy.Spider):
 
     def parse(self, event, **kwargs):
 
+        items=EventsItem()
 
         # To get the css tags use the SelectorGadget in Chrome
         # event_info["url"]=response.css(".alert-info").xpath("@href").extract()
@@ -17,9 +19,13 @@ class EventSpider(scrapy.Spider):
         all_events=event.css(".VESZEventArchive").css("a")
 
         for event in all_events:
-            event_info={}
-            event_info["url"]=event.xpath("@href").extract_first()
-            event_info["title"]=event.css(".title::text").extract_first()
-            event_info["date"]=event.css(".date::text").extract_first()
-            event_info["category"]=event.css(".category::text").extract_first()
-            yield event_info    
+            items["url"]=event.xpath("@href").extract_first()
+            items["title"]=event.css(".title::text").extract_first()
+            items["date"]=event.css(".date::text").extract_first()
+            items["category"]=event.css(".category::text").extract_first()
+
+            
+
+            if not all(items.values()):
+                continue
+            yield items    
