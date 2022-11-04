@@ -7,6 +7,9 @@ class EventSpider(scrapy.Spider):
         r"https://www.katasztrofavedelem.hu/modules/vesz/archivum/?date=2022-11-04&type=date&back=https%3A%2F%2Fwww.katasztrofavedelem.hu%2Fmodules%2Fvesz%2Fesemenyterkep%2F%3Fback%3D%23"
     ]
 
+    start_urls=[rf"https://www.katasztrofavedelem.hu/modules/vesz/archivum/?yearMonth={year}-{month:02}&type=yearMonth&back=https%3A%2F%2Fwww.katasztrofavedelem.hu%2Fmodules%2Fvesz%2Fesemenyterkep%2F%3Fback%3D" 
+    for year in range(2017,2023) for month in range(1,13)]
+
     def parse(self, event, **kwargs):
 
         items=EventsItem()
@@ -24,7 +27,7 @@ class EventSpider(scrapy.Spider):
             items["date"]=event.css(".date::text").extract_first()
             items["category"]=event.css(".category::text").extract_first()
 
-            
+
 
             if not all(items.values()):
                 continue
