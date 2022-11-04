@@ -13,3 +13,6 @@ class EventsItem(scrapy.Item):
     title=scrapy.Field()
     date=scrapy.Field()
     category=scrapy.Field()
+    subtitle=scrapy.Field()
+    content=scrapy.Field()
+    location=scrapy.Field()

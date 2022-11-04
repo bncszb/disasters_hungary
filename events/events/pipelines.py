@@ -24,6 +24,9 @@ class EventsPipeline:
             title text,
             date text,
             category text,
+            subtitle text,
+            content text,
+            location text,
             url text)
             """)
     def process_item(self, item, spider):
@@ -32,5 +35,5 @@ class EventsPipeline:
         return item
 
     def store_db(self, item):
-        self.curs.execute(f"""insert into events_table values (\"{item['title']}\",\"{item['date']}\",\"{item['category']}\",\"{item['url']}\")""")
+        self.curs.execute(f"""insert into events_table values (\"{item['title']}\",\"{item['date']}\",\"{item['category']}\",\"{item['subtitle']}\",\"{item['content']}\",\"{item['location']}\",\"{item['url']}\")""")
         self.conn.commit()
