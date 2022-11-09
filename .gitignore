@@ -1,5 +1,7 @@
 .DS_Store
 
+met_data/met_data*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
